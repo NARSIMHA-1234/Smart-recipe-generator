@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Recipe Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-utensils"></i>
+            <span>Smart Recipe Generator</span>
+        </div>
+        <div class="nav-menu">
+            <button class="nav-btn active" data-section="ingredients">
+                <i class="fas fa-plus"></i> Add Ingredients
+            </button>
+            <button class="nav-btn" data-section="preferences">
+                <i class="fas fa-leaf"></i> Preferences
+            </button>
+            <button class="nav-btn" data-section="filters">
+                <i class="fas fa-filter"></i> Filters
+            </button>
+            <button class="nav-btn" data-section="favorites">
+                <i class="fas fa-heart"></i> Favorites
+            </button>
+            <button class="nav-btn" data-section="recommend">
+                <i class="fas fa-star"></i> Recommend
+            </button>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Ingredients Section -->
+        <section class="section active" id="ingredients">
+            <div class="section-header">
+                <h2><i class="fas fa-carrot"></i> Add Your Ingredients</h2>
+                <p>Upload a photo or manually add ingredients you have</p>
+            </div>
+
+            <div class="input-methods">
+                <!-- Photo Upload -->
+                <div class="input-card">
+                    <div class="card-header">
+                        <i class="fas fa-camera"></i>
+                        <div>
+                            <h3>Photo Upload</h3>
+                            <p>Upload ingredient photos</p>
+                        </div>
+                    </div>
+                    <div class="upload-zone" id="uploadArea">
+                        <input type="file" id="imageInput" accept="image/*" hidden>
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4>Drop image here</h4>
+                            <p>or click to browse</p>
+                        </div>
+                    </div>
+                    <div id="imagePreview" class="image-preview hidden"></div>
+                </div>
+
+                <!-- Manual Input -->
+                <div class="input-card">
+                    <div class="card-header">
+                        <i class="fas fa-keyboard"></i>
+                        <div>
+                            <h3>Manual Entry</h3>
+                            <p>Type ingredients manually</p>
+                        </div>
+                    </div>
+                    <div class="ingredient-input">
+                        <input type="text" id="ingredientInput" placeholder="Type ingredient name...">
+                        <button id="addIngredient"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="suggestions" id="suggestions"></div>
+                </div>
+            </div>
+
+            <!-- Ingredient Display -->
+            <div class="ingredients-display">
+                <div class="display-header">
+                    <h3>Your Ingredients</h3>
+                    <span class="count" id="ingredientCount">0 ingredients</span>
+                </div>
+                <div class="ingredient-tags" id="ingredientTags"></div>
+            </div>
+
+            <!-- Generate Button -->
+            <button id="generateRecipes" class="generate-btn">
+                <i class="fas fa-magic"></i>
+                <span>Find Perfect Recipes</span>
+            </button>
+        </section>
+
+        <!-- Preferences Section -->
+        <section class="section" id="preferences">
+            <div class="section-header">
+                <h2><i class="fas fa-leaf"></i> Dietary Preferences</h2>
+                <p>Select your dietary requirements</p>
+            </div>
+            <div class="preference-grid">
+                <label class="preference-card">
+                    <input type="checkbox" value="vegetarian">
+                    <div class="card-content">
+                        <i class="fas fa-seedling"></i>
+                        <span>Vegetarian</span>
+                    </div>
+                </label>
+                <label class="preference-card">
+                    <input type="checkbox" value="vegan">
+                    <div class="card-content">
+                        <i class="fas fa-leaf"></i>
+                        <span>Vegan</span>
+                    </div>
+                </label>
+                <label class="preference-card">
+                    <input type="checkbox" value="gluten-free">
+                    <div class="card-content">
+                        <i class="fas fa-wheat"></i>
+                        <span>Gluten-Free</span>
+                    </div>
+                </label>
+                <label class="preference-card">
+                    <input type="checkbox" value="dairy-free">
+                    <div class="card-content">
+                        <i class="fas fa-ban"></i>
+                        <span>Dairy-Free</span>
+                    </div>
+                </label>
+                <label class="preference-card">
+                    <input type="checkbox" value="low-carb">
+                    <div class="card-content">
+                        <i class="fas fa-dumbbell"></i>
+                        <span>Low-Carb</span>
+                    </div>
+                </label>
+                <label class="preference-card">
+                    <input type="checkbox" value="keto">
+                    <div class="card-content">
+                        <i class="fas fa-fire"></i>
+                        <span>Keto</span>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="section" id="filters">
+            <div class="section-header">
+                <h2><i class="fas fa-filter"></i> Recipe Filters</h2>
+                <p>Customize your recipe search</p>
+            </div>
+            <div class="filter-grid">
+                <div class="filter-card">
+                    <label><i class="fas fa-signal"></i> Difficulty</label>
+                    <select id="difficultyFilter">
+                        <option value="">Any Level</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+                <div class="filter-card">
+                    <label><i class="fas fa-clock"></i> Cooking Time</label>
+                    <select id="timeFilter">
+                        <option value="">Any Time</option>
+                        <option value="15">Under 15 min</option>
+                        <option value="30">Under 30 min</option>
+                        <option value="60">Under 1 hour</option>
+                    </select>
+                </div>
+                <div class="filter-card">
+                    <label><i class="fas fa-users"></i> Servings</label>
+                    <div class="serving-control">
+                        <button type="button" onclick="adjustServings(-1)">-</button>
+                        <input type="number" id="servingsInput" value="4" min="1" max="12">
+                        <button type="button" onclick="adjustServings(1)">+</button>
+                    </div>
+                </div>
+                <div class="filter-card">
+                    <label><i class="fas fa-globe"></i> Cuisine</label>
+                    <select id="cuisineFilter">
+                        <option value="">Any Cuisine</option>
+                        <option value="italian">Italian</option>
+                        <option value="asian">Asian</option>
+                        <option value="mexican">Mexican</option>
+                        <option value="indian">Indian</option>
+                        <option value="american">American</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Favorites Section -->
+        <section class="section" id="favorites">
+            <div class="section-header">
+                <h2><i class="fas fa-heart"></i> Your Favorites</h2>
+                <p>Recipes you've saved for later</p>
+            </div>
+            <div id="favoriteRecipes" class="recipe-grid"></div>
+        </section>
+
+        <!-- Recommend Recipes Section -->
+        <section class="section" id="recommend">
+            <div class="section-header">
+                <h2><i class="fas fa-star"></i> Recommended Recipes</h2>
+                <p>Popular and trending recipes you might love</p>
+            </div>
+            <div class="recommend-filters">
+                <button class="filter-btn active" data-filter="popular">Popular</button>
+                <button class="filter-btn" data-filter="trending">Trending</button>
+                <button class="filter-btn" data-filter="quick">Quick & Easy</button>
+                <button class="filter-btn" data-filter="healthy">Healthy</button>
+            </div>
+            <div id="recommendedRecipes" class="recipe-grid"></div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section hidden">
+            <div class="section-header">
+                <h2><i class="fas fa-utensils"></i> Recipe Suggestions</h2>
+                <div class="sort-controls">
+                    <select id="sortBy">
+                        <option value="match">Best Match</option>
+                        <option value="time">Cooking Time</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                </div>
+            </div>
+            <div id="recipeResults" class="recipe-grid"></div>
+        </section>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="cooking-animation">
+                <div class="pot">🍲</div>
+                <div class="steam">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <h3>Finding Perfect Recipes...</h3>
+            <p>Searching through our recipe collection</p>
+        </div>
+    </div>
+
+    <!-- Recipe Modal -->
+    <div id="recipeModal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <button class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="modalContent" class="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

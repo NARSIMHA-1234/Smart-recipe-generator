@@ -1,0 +1,30 @@
+{
+  "name": "smart-recipe-generator",
+  "version": "1.0.0",
+  "description": "A web application that suggests recipes based on available ingredients",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'No build process required for static site'",
+    "deploy": "echo 'Ready for deployment to static hosting'"
+  },
+  "keywords": [
+    "recipe",
+    "food",
+    "cooking",
+    "ingredients",
+    "nutrition",
+    "web-app"
+  ],
+  "author": "M NarasimhaNaidu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/smart-recipe-generator"
+  },
+  "homepage": "https://yourusername.github.io/smart-recipe-generator",
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
